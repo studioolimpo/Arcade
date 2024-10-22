@@ -7,8 +7,7 @@ var navContain = document.querySelector(".nav_contain");
 var navDivider = document.querySelector(".nav_divider_wrap");
 var hamburgerLine = document.querySelectorAll(".nav_hamburger_line");
 var navWrap = document.querySelector(".nav_wrap");
-var initialTheme = navWrap.getAttribute("data-theme") || "light"; // Default to "light"
-var currentTheme = initialTheme === "dark" ? "dark-theme" : "light-theme";
+var logoWrap = document.querySelector(".nav_logo_wrap");
 
 // Crea una timeline GSAP per l'animazione del menu
 var tl = gsap.timeline({
@@ -16,6 +15,7 @@ var tl = gsap.timeline({
   reversed: true,
   onReverseComplete: function () {
     gsap.set(nav, { display: "none" });
+    // Imposta il mixBlendMode su normal di default quando l'animazione è invertita
     gsap.set(navContain, { css: { mixBlendMode: "normal" } });
     gsap.set(navDivider, { css: { mixBlendMode: "normal" } });
     document.body.style.overflow = ""; // Riattiva lo scroll del body
@@ -34,17 +34,20 @@ tl.set(nav, { display: "block" })
       autoAlpha: 0,
       yPercent: 15,
       duration: 0.8,
-      stagger: { amount: 0.7 },
+      stagger: {
+        amount: 0.7,
+      },
     },
     "-=0.3"
   );
 
 // Funzione per gestire l'animazione del menu e il mix-blend-mode
 function toggleAnim() {
+  // Toggle class "is-active" su .hamburger e .nav
   hamburger.classList.toggle("is-active");
   nav.classList.toggle("is-active");
 
-  // Controlla se navWrap ha la classe dark-theme o light-theme
+  // Controlla se navWrap ha la classe dark-theme o light-theme ad ogni click
   if (navWrap.classList.contains("dark-theme")) {
     gsap.set(navContain, { css: { mixBlendMode: "difference" } });
     gsap.set(navDivider, { css: { mixBlendMode: "difference" } });
@@ -53,6 +56,7 @@ function toggleAnim() {
     gsap.set(navDivider, { css: { mixBlendMode: "normal" } });
   }
 
+  // Riproduci o inverti l'animazione
   if (tl.reversed()) {
     tl.play();
     document.body.style.overflow = "hidden"; // Disabilita lo scroll del body
@@ -68,66 +72,4 @@ hamburger.addEventListener("click", toggleAnim);
 // Aggiungi l'evento click su ciascun link del menu mobile
 links.forEach(function (link) {
   link.addEventListener("click", toggleAnim);
-});
-
-// Gestione della visibilità della navbar in base allo scroll
-let bodyScrollDirection;
-let lastScrollTop = 0;
-const scrollThreshold = 20;
-
-// Check start page
-if (window.scrollY > 0) {
-  navWrap.classList.add("is-hidden");
-}
-
-// Hide / show nav on scroll down / up
-ScrollTrigger.create({
-  trigger: "body",
-  start: "top top",
-  end: "bottom bottom",
-  onUpdate: (self) => {
-    let currentScrollTop = self.scroll(); // Ottieni la posizione attuale di scroll
-    if (Math.abs(currentScrollTop - lastScrollTop) > scrollThreshold) {
-      bodyScrollDirection = currentScrollTop > lastScrollTop ? 1 : -1; // 1 per scroll giù, -1 per scroll su
-      lastScrollTop = currentScrollTop; // Aggiorna l'ultima posizione di scroll
-
-      if (bodyScrollDirection === 1) {
-        navWrap.classList.add("is-hidden");
-      } else {
-        navWrap.classList.remove("is-hidden");
-      }
-    }
-  },
-});
-
-// Determina il tema corrente e gestisce le classi
-$("section[data-theme]").each(function () {
-  let theme = $(this).attr("data-theme") === "dark" ? 2 : 1; // Cambia il tema se è "dark"
-
-  ScrollTrigger.create({
-    trigger: $(this),
-    start: "top top",
-    end: "bottom top",
-    onToggle: ({ isActive }) => {
-      if (isActive) {
-        gsap.to(".nav_wrap", { ...colorThemes[theme], duration: 0.3 });
-
-        // Gestisci le classi di tema solo se c'è un cambiamento effettivo
-        if (theme === 1 && currentTheme !== "light-theme") {
-          navWrap.classList.remove("dark-theme");
-          navWrap.classList.add("light-theme");
-          currentTheme = "light-theme";
-        } else if (theme === 2 && currentTheme !== "dark-theme") {
-          navWrap.classList.remove("light-theme");
-          navWrap.classList.add("dark-theme");
-          currentTheme = "dark-theme";
-        }
-      }
-    },
-  });
-});
-
-// Cause a click on menu bg to trigger a click on nav button
-background.addEventListener("click", function () {
-  hamburger.click();
 });
