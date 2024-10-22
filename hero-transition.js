@@ -36,24 +36,24 @@ $("[divider-in]").each(function () {
 });
 
 // Split del testo in linee e avvolgimento
-function splitText(e) {
-  if ($(e).hasClass("splitted")) return $(e).find(".single-line");
-  const t = new SplitType(e, {
-    types: "lines",
-    tagName: "span",
-    linesClass: "single-line",
-  });
-  $(t.lines).wrap('<div class="line-wrapper" style="overflow: hidden;"></div>');
-  $(e).addClass("splitted");
-  return t.lines;
-}
+// function splitText(e) {
+//   if ($(e).hasClass("splitted")) return $(e).find(".single-line");
+//   const t = new SplitType(e, {
+//     types: "lines",
+//     tagName: "span",
+//     linesClass: "single-line",
+//   });
+//   $(t.lines).wrap('<div class="line-wrapper" style="overflow: hidden;"></div>');
+//   $(e).addClass("splitted");
+//   return t.lines;
+// }
 
-// Split del testo nell'hero
-let typeSplit = new SplitType("#hero .u-text-h1[text-split]", {
-  types: "lines, words, chars",
-  tagName: "span",
-});
-const lines = splitText("#hero .u-text-h1 [text-split]");
+// // Split del testo nell'hero
+// let typeSplit = new SplitType("#hero .u-text-h1[text-split]", {
+//   types: "lines, words, chars",
+//   tagName: "span",
+// });
+// const lines = splitText("#hero .u-text-h1 [text-split]");
 
 // Timeline di intro per Hero Section
 let introTl = gsap.timeline({ paused: true });
