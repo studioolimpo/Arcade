@@ -14,8 +14,6 @@ var fpms = 60 / 1000;
 var xSet = gsap.quickSetter(cursor, "x", "px");
 var ySet = gsap.quickSetter(cursor, "y", "px");
 
-var currentTheme = "brand"; // Default theme
-
 // Hide cursor on page load
 $(".cursor_dot").addClass("cursor_hide");
 
@@ -31,7 +29,6 @@ window.addEventListener("mousemove", (e) => {
     $(".cursor_dot").removeClass("cursor_hide");
     cursorRevealed = true;
   }
-
 });
 
 // Continuously update cursor position
@@ -87,5 +84,3 @@ $("body").on("mousedown", function () {
 $("body").on("mouseup", function () {
   $(".cursor_dot").removeClass("cursor_smaller");
 });
-
-
