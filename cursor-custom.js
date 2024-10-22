@@ -14,6 +14,8 @@ var fpms = 60 / 1000;
 var xSet = gsap.quickSetter(cursor, "x", "px");
 var ySet = gsap.quickSetter(cursor, "y", "px");
 
+var currentTheme = "dark"; // Default theme
+
 // Hide cursor on page load
 $(".cursor_dot").addClass("cursor_hide");
 
@@ -29,6 +31,9 @@ window.addEventListener("mousemove", (e) => {
     $(".cursor_dot").removeClass("cursor_hide");
     cursorRevealed = true;
   }
+
+  // Check the theme of the section the cursor is currently over
+  checkSectionTheme(e.clientX, e.clientY);
 });
 
 // Continuously update cursor position
