@@ -32,8 +32,6 @@ window.addEventListener("mousemove", (e) => {
     cursorRevealed = true;
   }
 
-  // Check the theme of the section the cursor is currently over
-  checkSectionTheme(e.clientX, e.clientY);
 });
 
 // Continuously update cursor position
@@ -90,31 +88,4 @@ $("body").on("mouseup", function () {
   $(".cursor_dot").removeClass("cursor_smaller");
 });
 
-//---------CHECK SECTION THEME-----------//
 
-function checkSectionTheme(x, y) {
-  // Use elementFromPoint to find the element under the cursor
-  var element = document.elementFromPoint(x, y);
-
-  // Check if the element or its parent has a data-theme attribute
-  var section = element.closest("section[data-theme]");
-
-  if (section) {
-    var theme = section.getAttribute("data-theme");
-
-    // Change cursor background color based on the theme of the section
-    if (theme === "dark" && currentTheme !== "dark") {
-      gsap.to(".cursor_dot", {
-        backgroundColor: "var(--swatch--light)",
-        duration: 0.3,
-      });
-      currentTheme = "dark";
-    } else if (theme === "light" && currentTheme !== "light") {
-      gsap.to(".cursor_dot", {
-        backgroundColor: "var(--swatch--dark)",
-        duration: 0.3,
-      });
-      currentTheme = "light";
-    }
-  }
-}
