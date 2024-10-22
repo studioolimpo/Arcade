@@ -57,8 +57,6 @@ function toggleAnim() {
   hamburger.classList.toggle("is-active");
   nav.classList.toggle("is-active");
 
-  // Log per verificare lo stato delle classi del navWrap
-  console.log("Classi di navWrap:", navWrap.classList);
 
   // Controlla se navWrap ha la classe dark-theme o light-theme ad ogni click
   if (navWrap.classList.contains("dark-theme")) {
