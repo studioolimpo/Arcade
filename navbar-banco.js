@@ -119,7 +119,7 @@ ScrollTrigger.create({
 // Determina il tema corrente e gestisce le classi
 $("section[data-theme]").each(function () {
   let theme = 3; // Imposta il tema di default (brand)
-  if ($(this).attr("data-theme") === "dark") theme = 2; // Cambia il tema se è "dark"
+  if ($(this).attr("data-theme") === "dark") theme = 2; // Cambia tema se è "dark"
 
   ScrollTrigger.create({
     trigger: $(this),
