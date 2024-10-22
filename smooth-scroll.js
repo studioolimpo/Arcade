@@ -17,22 +17,18 @@ const lenis = new Lenis({
   
   // Gestione dei pulsanti per avviare o fermare lo scroll
   $("[data-lenis-start]").on("click", function () {
-    console.log("Start scrolling");
     lenis.start();
   });
   
   $("[data-lenis-stop]").on("click", function () {
-    console.log("Stop scrolling");
     lenis.stop();
   });
   
   $("[data-lenis-toggle]").on("click", function () {
     $(this).toggleClass("stop-scroll");
     if ($(this).hasClass("stop-scroll")) {
-      console.log("Scrolling stopped");
       lenis.stop();
     } else {
-      console.log("Scrolling resumed");
       lenis.start();
     }
   });
@@ -76,7 +72,6 @@ const lenis = new Lenis({
   
     // Controlla se si sta scrollando oltre il top
     if (scroll < 0) {
-      console.log("Sei oltre il top, cambio in absolute");
       navWrap.style.position = "absolute"; // Cambia la posizione della navbar
     } else {
       navWrap.style.position = "fixed"; // Imposta la navbar come fixed quando non sei oltre il top

@@ -7,8 +7,16 @@ var navContain = document.querySelector(".nav_contain");
 var navDivider = document.querySelector(".nav_divider_wrap");
 var hamburgerLine = document.querySelectorAll(".nav_hamburger_line");
 var navWrap = document.querySelector(".nav_wrap");
-var initialTheme = navWrap.getAttribute("data-theme") || "light"; // Default to "light"
-var currentTheme = initialTheme === "dark" ? "dark-theme" : "light-theme";
+var logoWrap = document.querySelector(".nav_logo_wrap");
+
+// Acquisisci il valore del tema iniziale di .nav_wrap
+let initialTheme = navWrap.getAttribute("data-theme") || "dark"; // Default to "dark" if not set
+
+// Determina il tema corrente basato sul valore di data-theme
+let currentTheme = initialTheme === "dark" ? "dark-theme" : "light-theme";
+
+// Imposta le classi iniziali di .nav_wrap in base al tema corrente
+navWrap.classList.add(currentTheme);
 
 // Crea una timeline GSAP per l'animazione del menu
 var tl = gsap.timeline({
@@ -32,11 +40,13 @@ tl.set(nav, { display: "block" })
     links,
     {
       autoAlpha: 0,
-      yPercent: 15,
+      yPercent: 10,
       duration: 0.8,
-      stagger: { amount: 0.7 },
+      stagger: {
+        amount: 0.7,
+      },
     },
-    "-=0.3"
+    "-=0.25"
   );
 
 // Funzione per gestire l'animazione del menu e il mix-blend-mode
@@ -44,7 +54,7 @@ function toggleAnim() {
   hamburger.classList.toggle("is-active");
   nav.classList.toggle("is-active");
 
-  // Controlla se navWrap ha la classe dark-theme o light-theme
+  // Controlla se navWrap ha la classe dark-theme o light-theme ad ogni click
   if (navWrap.classList.contains("dark-theme")) {
     gsap.set(navContain, { css: { mixBlendMode: "difference" } });
     gsap.set(navDivider, { css: { mixBlendMode: "difference" } });
@@ -102,25 +112,31 @@ ScrollTrigger.create({
 
 // Determina il tema corrente e gestisce le classi
 $("section[data-theme]").each(function () {
-  let theme = $(this).attr("data-theme") === "dark" ? 2 : 1; // Cambia il tema se è "dark"
+  let theme = 1; // Imposta il tema di default (light)
+  if ($(this).attr("data-theme") === "dark") theme = 2; // Cambia tema se è "dark"
 
   ScrollTrigger.create({
     trigger: $(this),
     start: "top top",
     end: "bottom top",
+    // markers: "true",
     onToggle: ({ isActive }) => {
       if (isActive) {
+        // Esegui la transizione dei colori
         gsap.to(".nav_wrap", { ...colorThemes[theme], duration: 0.3 });
 
         // Gestisci le classi di tema solo se c'è un cambiamento effettivo
         if (theme === 1 && currentTheme !== "light-theme") {
-          navWrap.classList.remove("dark-theme");
-          navWrap.classList.add("light-theme");
+          $(".nav_wrap").removeClass("dark-theme").addClass("light-theme");
           currentTheme = "light-theme";
+          gsap.set(navContain, { css: { mixBlendMode: "normal" } });
+          gsap.set(navDivider, { css: { mixBlendMode: "normal" } });
         } else if (theme === 2 && currentTheme !== "dark-theme") {
-          navWrap.classList.remove("light-theme");
-          navWrap.classList.add("dark-theme");
+          $(".nav_wrap").removeClass("light-theme").addClass("dark-theme");
           currentTheme = "dark-theme";
+          // Imposta mix-blend-mode su "difference" per il tema dark
+          gsap.set(navContain, { css: { mixBlendMode: "difference" } });
+          gsap.set(navDivider, { css: { mixBlendMode: "difference" } });
         }
       }
     },

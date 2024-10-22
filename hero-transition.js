@@ -2,7 +2,7 @@
 const isMobileDevice = () => /Mobi|Android/i.test(navigator.userAgent);
 
 // Trigger per animazioni con ScrollTrigger
-const createScrollTrigger = (triggerElement, timeline, startOffset = "99%") => {
+const createScrollTrigger = (triggerElement, timeline, startOffset) => {
   ScrollTrigger.create({
     trigger: triggerElement,
     start: `top ${startOffset}`,
@@ -19,7 +19,7 @@ $("[fade-in-up]").each(function () {
     duration: 1.2,
     ease: "power1.out",
   });
-  createScrollTrigger($(this), tl);
+  createScrollTrigger($(this), tl, "99%");
 });
 
 // Animazioni per dividers con attributo [divider-in]
@@ -32,7 +32,7 @@ $("[divider-in]").each(function () {
     duration: 1,
     ease: "cubic-bezier(0.33, 0, 0.13, 1)",
   });
-  createScrollTrigger($(this), tl);
+  createScrollTrigger($(this), tl, "90%");
 });
 
 // Split del testo in linee e avvolgimento
