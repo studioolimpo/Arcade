@@ -2,7 +2,7 @@
 const isMobileDevice = () => /Mobi|Android/i.test(navigator.userAgent);
 
 // Trigger per animazioni con ScrollTrigger
-const createScrollTrigger = (triggerElement, timeline, startOffset = "98%") => {
+const createScrollTrigger = (triggerElement, timeline, startOffset) => {
   ScrollTrigger.create({
     trigger: triggerElement,
     start: `top ${startOffset}`,
@@ -19,7 +19,7 @@ $("[fade-in-up]").each(function () {
     duration: 1.2,
     ease: "power1.out",
   });
-  createScrollTrigger($(this), tl);
+  createScrollTrigger($(this), tl, "95%");
 });
 
 // Animazioni per dividers con attributo [divider-in]
@@ -32,7 +32,7 @@ $("[divider-in]").each(function () {
     duration: 1,
     ease: "cubic-bezier(0.33, 0, 0.13, 1)",
   });
-  createScrollTrigger($(this), tl);
+  createScrollTrigger($(this), tl, "90%");
 });
 
 // Animazione GSAP per l'introduzione
@@ -55,7 +55,7 @@ introTl
     "<"
   )
   .from(
-    "#hero .layout_full_layout",
+    "#hero .layout_accordion_menu",
     {
       y: "1.5rem",
       autoAlpha: 0,
@@ -86,6 +86,18 @@ introTl
       },
     },
     "<0.4"
+  )
+  //alert message animation
+  .from(
+    ".nav_alert_text",
+    {
+      opacity: 0,
+      yPercent: 100,
+      duration: 0.5,
+      ease: "cubic-bezier(0.33, 0, 0.13, 1)",
+      stagger: { amount: 0.45 },
+    },
+    isMobileDevice() ? "-=1.6" : "-=1.2"
   );
 
 // Inizio della transizione al caricamento della pagina
@@ -115,8 +127,8 @@ $(document).ready(function () {
         { opacity: 0 },
         {
           opacity: 1,
-          duration: 0.7,
-          ease: "power1.inOut",
+          duration: 0.6,
+          ease: "power2.inOut",
           onComplete: () => {
             window.location = href;
           },
@@ -132,3 +144,6 @@ $(document).ready(function () {
     }
   };
 });
+
+// Evita flash di contenuto non stilizzato
+gsap.set("[text-split]", { opacity: 1 });

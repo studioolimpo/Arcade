@@ -86,8 +86,22 @@ introTl
       },
     },
     "<0.4"
+  )
+
+  //alert message animation
+  .from(
+    ".nav_alert_text",
+    {
+      opacity: 0,
+      yPercent: 100,
+      duration: 0.5,
+      ease: "cubic-bezier(0.33, 0, 0.13, 1)",
+      stagger: { amount: 0.45 },
+    },
+    isMobileDevice() ? "-=1.6" : "-=1.2"
   );
 
+  
 // Inizio della transizione al caricamento della pagina
 gsap.to(".transition_wrap", {
   opacity: 0,

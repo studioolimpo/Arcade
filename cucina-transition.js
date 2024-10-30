@@ -1,8 +1,8 @@
 // Funzione per rilevare se è un dispositivo mobile
 const isMobileDevice = () => /Mobi|Android/i.test(navigator.userAgent);
 
-// Trigger per animazioni con ScrollTrigger
-const createScrollTrigger = (triggerElement, timeline, startOffset = "98%") => {
+// Funzione per creare trigger ScrollTrigger
+const createScrollTrigger = (triggerElement, timeline, startOffset) => {
   ScrollTrigger.create({
     trigger: triggerElement,
     start: `top ${startOffset}`,
@@ -16,13 +16,26 @@ $("[fade-in-up]").each(function () {
   tl.from($(this), {
     autoAlpha: 0,
     y: "0.5rem",
-    duration: 1.2,
+    duration: 1,
     ease: "power1.out",
   });
-  createScrollTrigger($(this), tl);
+  createScrollTrigger($(this), tl, "99%");
 });
 
-// Animazione GSAP per l'introduzione
+// Animazioni per dividers con attributo [divider-in]
+$("[divider-in]").each(function () {
+  const tl = gsap.timeline({ paused: true });
+  tl.from($(this), {
+    autoAlpha: 0,
+    scaleX: 0.9,
+    transformOrigin: "left center",
+    duration: 1,
+    ease: "cubic-bezier(0.33, 0, 0.13, 1)",
+  });
+  createScrollTrigger($(this), tl, "90%");
+});
+
+// Timeline di intro per Hero Section
 const introTl = gsap.timeline({ paused: true });
 introTl
   .from(".logo_svg", {
@@ -42,19 +55,19 @@ introTl
     "<"
   )
   .from(
-    "#hero .layout_split_layout",
+    "#hero .layout_full_layout",
     {
-      y: "1.5rem",
       autoAlpha: 0,
+      y: "1rem",
       duration: 1.2,
       ease: "cubic-bezier(0.33, 0, 0.13, 1)",
     },
-    "<0.3"
+    "<0.4"
   )
   .from(
     ".nav_hamburger_layout",
     {
-      opacity: 0,
+      autoAlpha: 0,
       yPercent: 100,
       duration: 0.7,
       ease: "cubic-bezier(0.33, 0, 0.13, 1)",
@@ -64,39 +77,29 @@ introTl
   .from(
     ".nav_menu_link",
     {
+      autoAlpha: 0,
+      yPercent: 100,
+      duration: 0.5,
+      ease: "cubic-bezier(0.33, 0, 0.13, 1)",
+      stagger: { amount: 0.45 },
+    },
+    "<0.35"
+  )
+
+  //alert message animation
+  .from(
+    ".nav_alert_text",
+    {
       opacity: 0,
       yPercent: 100,
       duration: 0.5,
       ease: "cubic-bezier(0.33, 0, 0.13, 1)",
-      stagger: {
-        amount: 0.45,
-      },
+      stagger: { amount: 0.45 },
     },
-    "<0.4"
-  )
-  .from(
-    ".divider_wrap",
-    {
-      autoAlpha: 0,
-      y: "1rem",
-      duration: 0.7,
-      ease: "cubic-bezier(0.33, 0, 0.13, 1)",
-    },
-    "<0.3"
-  )
-
-  .from(
-    ".maps_wrap",
-    {
-      y: "1.5rem",
-      opacity: 0,
-      duration: 1.2,
-      ease: "cubic-bezier(0.33, 0, 0.13, 1)",
-    },
-    "<0.3"
+    isMobileDevice() ? "-=1.6" : "-=1.2"
   );
 
-// Inizio della transizione al caricamento della pagina
+// Codice che gira al caricamento
 gsap.to(".transition_wrap", {
   opacity: 0,
   duration: 0.5,
@@ -134,7 +137,7 @@ $(document).ready(function () {
   });
 
   // Gestione del back button
-  window.onpageshow = function (event) {
+  window.onpageshow = (event) => {
     if (event.persisted) {
       window.location.reload();
     }
