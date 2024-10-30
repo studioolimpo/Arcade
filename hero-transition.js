@@ -105,7 +105,7 @@ introTl
     },
     "<0.3"
   )
-    //alert message animation
+    //alert message animation ferie
     .from(
       ".nav_alert_text",
       {
