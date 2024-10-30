@@ -3,8 +3,9 @@ var hamburger = document.querySelector(".nav_btn_wrap");
 var nav = document.querySelector(".nav_mobile_wrap");
 var links = document.querySelectorAll(".nav_mobile_link_wrap");
 var background = document.querySelector(".nav_mobile_bg");
-var navContain = document.querySelector(".nav_contain");
+var navContain = document.querySelectorAll(".nav_contain");
 var navDivider = document.querySelector(".nav_divider_wrap");
+var navDividerMiddle = document.querySelector(".nav_divider_middle");
 var hamburgerLine = document.querySelectorAll(".nav_hamburger_line");
 var navWrap = document.querySelector(".nav_wrap");
 var logoWrap = document.querySelector(".nav_logo_wrap");
@@ -26,6 +27,7 @@ var tl = gsap.timeline({
     gsap.set(nav, { display: "none" });
     gsap.set(navContain, { css: { mixBlendMode: "normal" } });
     gsap.set(navDivider, { css: { mixBlendMode: "normal" } });
+    gsap.set(navDividerMiddle, { css: { mixBlendMode: "normal" } });
     document.body.style.overflow = ""; // Riattiva lo scroll del body
     lenis.start(); // Riattiva lo scroll di Lenis
   },
@@ -58,9 +60,11 @@ function toggleAnim() {
   if (navWrap.classList.contains("dark-theme")) {
     gsap.set(navContain, { css: { mixBlendMode: "difference" } });
     gsap.set(navDivider, { css: { mixBlendMode: "difference" } });
+    gsap.set(navDividerMiddle, { css: { mixBlendMode: "difference" } });
   } else {
     gsap.set(navContain, { css: { mixBlendMode: "normal" } });
     gsap.set(navDivider, { css: { mixBlendMode: "normal" } });
+    gsap.set(navDividerMiddle, { css: { mixBlendMode: "normal" } });
   }
 
   if (tl.reversed()) {
@@ -131,12 +135,14 @@ $("section[data-theme]").each(function () {
           currentTheme = "light-theme";
           gsap.set(navContain, { css: { mixBlendMode: "normal" } });
           gsap.set(navDivider, { css: { mixBlendMode: "normal" } });
+          gsap.set(navDividerMiddle, { css: { mixBlendMode: "normal" } });
         } else if (theme === 2 && currentTheme !== "dark-theme") {
           $(".nav_wrap").removeClass("light-theme").addClass("dark-theme");
           currentTheme = "dark-theme";
           // Imposta mix-blend-mode su "difference" per il tema dark
           gsap.set(navContain, { css: { mixBlendMode: "difference" } });
           gsap.set(navDivider, { css: { mixBlendMode: "difference" } });
+          gsap.set(navDividerMiddle, { css: { mixBlendMode: "difference" } });
         }
       }
     },
@@ -171,7 +177,6 @@ document.addEventListener("DOMContentLoaded", setNavHeightAlert);
 
 // Aggiorna la variabile CSS quando la finestra viene ridimensionata
 window.addEventListener("resize", setNavHeightAlert);
-
 
 // Cause a click on menu bg to trigger a click on nav button
 background.addEventListener("click", function () {

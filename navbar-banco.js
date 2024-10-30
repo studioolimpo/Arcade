@@ -3,8 +3,9 @@ var hamburger = document.querySelector(".nav_btn_wrap");
 var nav = document.querySelector(".nav_mobile_wrap");
 var links = document.querySelectorAll(".nav_mobile_link_wrap");
 var background = document.querySelector(".nav_mobile_bg");
-var navContain = document.querySelector(".nav_contain");
+var navContain = document.querySelectorAll(".nav_contain");
 var navDivider = document.querySelector(".nav_divider_wrap");
+var navDividerMiddle = document.querySelector(".nav_divider_middle");
 var hamburgerLine = document.querySelectorAll(".nav_hamburger_line");
 var navWrap = document.querySelector(".nav_wrap");
 var logoWrap = document.querySelector(".nav_logo_wrap");
@@ -26,6 +27,7 @@ var tl = gsap.timeline({
     gsap.set(nav, { display: "none" });
     gsap.set(navContain, { css: { mixBlendMode: "normal" } });
     gsap.set(navDivider, { css: { mixBlendMode: "normal" } });
+    gsap.set(navDividerMiddle, { css: { mixBlendMode: "normal" } });
     document.body.style.overflow = ""; // Riattiva lo scroll del body
     lenis.start(); // Riattiva lo scroll di Lenis
   },
@@ -57,14 +59,18 @@ function toggleAnim() {
   hamburger.classList.toggle("is-active");
   nav.classList.toggle("is-active");
 
+  // Log per verificare lo stato delle classi del navWrap
+  console.log("Classi di navWrap:", navWrap.classList);
 
   // Controlla se navWrap ha la classe dark-theme o light-theme ad ogni click
   if (navWrap.classList.contains("dark-theme")) {
     gsap.set(navContain, { css: { mixBlendMode: "difference" } });
     gsap.set(navDivider, { css: { mixBlendMode: "difference" } });
+    gsap.set(navDividerMiddle, { css: { mixBlendMode: "difference" } });
   } else {
     gsap.set(navContain, { css: { mixBlendMode: "normal" } });
     gsap.set(navDivider, { css: { mixBlendMode: "normal" } });
+    gsap.set(navDividerMiddle, { css: { mixBlendMode: "normal" } });
   }
 
   if (tl.reversed()) {
@@ -135,6 +141,7 @@ $("section[data-theme]").each(function () {
           currentTheme = "brand-theme";
           gsap.set(navContain, { css: { mixBlendMode: "normal" } });
           gsap.set(navDivider, { css: { mixBlendMode: "normal" } });
+          gsap.set(navDividerMiddle, { css: { mixBlendMode: "normal" } });
           gsap.set(background, {
             css: { background: "var(--swatch--brand-banco)" },
           });
@@ -144,6 +151,7 @@ $("section[data-theme]").each(function () {
           // Imposta mix-blend-mode su "difference" per il tema dark
           gsap.set(navContain, { css: { mixBlendMode: "difference" } });
           gsap.set(navDivider, { css: { mixBlendMode: "difference" } });
+          gsap.set(navDividerMiddle, { css: { mixBlendMode: "difference" } });
           // gsap.set(background, {
           //  css: { background: "var(--swatch--light)" },
           // });
@@ -153,6 +161,7 @@ $("section[data-theme]").each(function () {
           currentTheme = "brand-theme";
           gsap.set(navContain, { css: { mixBlendMode: "normal" } });
           gsap.set(navDivider, { css: { mixBlendMode: "normal" } });
+          gsap.set(navDividerMiddle, { css: { mixBlendMode: "normal" } });
           gsap.set(background, {
             css: { background: "var(--swatch--brand-banco)" },
           });
@@ -161,7 +170,6 @@ $("section[data-theme]").each(function () {
     },
   });
 });
-
 
 function setNavHeightAlert() {
   const navWrap = document.querySelector(".nav_wrap");
@@ -190,7 +198,6 @@ document.addEventListener("DOMContentLoaded", setNavHeightAlert);
 
 // Aggiorna la variabile CSS quando la finestra viene ridimensionata
 window.addEventListener("resize", setNavHeightAlert);
-
 
 // Cause a click on menu bg to trigger a click on nav button
 background.addEventListener("click", function () {
