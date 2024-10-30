@@ -149,7 +149,7 @@ $("section[data-theme]").each(function () {
   });
 });
 
-// ALTEZZA
+// ALTEZZA NAVBAR
 function setNavHeightAlert() {
   const navWrap = document.querySelector(".nav_wrap");
   if (navWrap) {
