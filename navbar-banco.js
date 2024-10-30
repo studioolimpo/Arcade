@@ -162,6 +162,36 @@ $("section[data-theme]").each(function () {
   });
 });
 
+
+function setNavHeightAlert() {
+  const navWrap = document.querySelector(".nav_wrap");
+  if (navWrap) {
+    // Ottieni l'altezza dell'elemento .nav_wrap in pixel
+    const navHeightPx = navWrap.offsetHeight;
+
+    // Ottieni la dimensione del font root in pixel (1 rem)
+    const rootFontSize = parseFloat(
+      getComputedStyle(document.documentElement).fontSize
+    );
+
+    // Converte l'altezza in rem
+    const navHeightRem = navHeightPx / rootFontSize;
+
+    // Imposta la variabile CSS --size--nav-height-alert direttamente in rem
+    document.documentElement.style.setProperty(
+      "--size--nav-height-alert",
+      `${navHeightRem}rem`
+    );
+  }
+}
+
+// Esegui la funzione all'inizializzazione della pagina
+document.addEventListener("DOMContentLoaded", setNavHeightAlert);
+
+// Aggiorna la variabile CSS quando la finestra viene ridimensionata
+window.addEventListener("resize", setNavHeightAlert);
+
+
 // Cause a click on menu bg to trigger a click on nav button
 background.addEventListener("click", function () {
   hamburger.click();
