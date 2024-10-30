@@ -2,7 +2,7 @@
 const isMobileDevice = () => /Mobi|Android/i.test(navigator.userAgent);
 
 // Trigger per animazioni con ScrollTrigger
-const createScrollTrigger = (triggerElement, timeline, startOffset) => {
+const createScrollTrigger = (triggerElement, timeline, startOffset = "99%") => {
   ScrollTrigger.create({
     trigger: triggerElement,
     start: `top ${startOffset}`,
@@ -19,7 +19,7 @@ $("[fade-in-up]").each(function () {
     duration: 1.2,
     ease: "power1.out",
   });
-  createScrollTrigger($(this), tl, "99%");
+  createScrollTrigger($(this), tl);
 });
 
 // Animazioni per dividers con attributo [divider-in]
@@ -70,6 +70,7 @@ introTl
       scaleX: 0,
       transformOrigin: "left center",
       duration: isMobileDevice() ? 1.2 : 1.6,
+      stagger: { amount: 0.05 },
       ease: "cubic-bezier(0.33, 0, 0.13, 1)",
     },
     "<"
@@ -105,18 +106,18 @@ introTl
     },
     "<0.3"
   )
-    //alert message animation ferie
-    .from(
-      ".nav_alert_text",
-      {
-        opacity: 0,
-        yPercent: 100,
-        duration: 0.5,
-        ease: "cubic-bezier(0.33, 0, 0.13, 1)",
-        stagger: { amount: 0.45 },
-      },
-      isMobileDevice() ? "-=1.6" : "-=1.2"
-    );
+  //alert message animation
+  .from(
+    ".nav_alert_text",
+    {
+      opacity: 0,
+      yPercent: 100,
+      duration: 0.5,
+      ease: "cubic-bezier(0.33, 0, 0.13, 1)",
+      stagger: { amount: 0.45 },
+    },
+    isMobileDevice() ? "-=1.6" : "-=1.2"
+  );
 
 // Codice che gira al caricamento
 gsap.to(".transition_wrap", {
